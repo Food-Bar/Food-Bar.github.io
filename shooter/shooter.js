@@ -133,14 +133,40 @@ function animate() {
         }
     });
 
+    particles.forEach((particle, i) => {
+        context.save();
+        particle.update();
+        context.restore();
+        if (particle.alpha < 0)
+            particles.splice(i, 1);
+    })
+
+    enemyLoop();
+
+}
+
+function enemyLoop() {
     enemies.forEach((enemy, i) => {
         enemy.update();
+
+        //particle collision
+        particles.forEach((particle, j) => {
+            const distance = Math.hypot(particle.x - enemy.x, particle.y - enemy.y);
+            if (distance < enemy.radius + particle.radius) {
+                setTimeout(() => {
+                    particles.splice(j, 1);
+                    enemy.radius -= 2 * particle.radius;
+                    if (enemy.radius < 5) enemy.radius = 5;//particle doesn't kill
+                });
+            }
+        });
+
+        //projectile collision
         projectiles.forEach((projectile, j) => {
-            //projectile hit enemy
             const distance = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);
             if (distance < enemy.radius + projectile.radius) {
-                setTimeout(() => { projectiles.splice(j, 1); }); //remove projectile
-                if (enemy.radius > 5 + 2 * projectile.radius) { //if large, shrink
+                projectiles.splice(j, 1);
+                if (enemy.radius > 5 + 2 * projectile.radius) { //if large, shrink & remove projectile
                     gsap.to(enemy, { radius: enemy.radius - 2 * projectile.radius, duration: 0.25 });
                     for (let i = 0; i < projectile.radius * particlePerSize; i++) {//explode
                         particles.push(new Particle(projectile.x, projectile.y, particleSize, enemy.color,
@@ -148,7 +174,7 @@ function animate() {
                     }
                     score += 50;
                 } else { //if small, die
-                    setTimeout(() => { enemies.splice(i, 1); });
+                    enemy.radius = 0;
                     for (let i = 0; i < enemy.originalRadius * particlePerSize; i++) {//explode
                         particles.push(new Particle(projectile.x, projectile.y, particleSize, enemy.color,
                             Math.random() * particleMaxSpeed, Math.random() * 2 * Math.PI));
@@ -160,22 +186,9 @@ function animate() {
             }
         });
 
-        particles.forEach((particle, j) => {
-            //particle hit enemy
-            const distance = Math.hypot(particle.x - enemy.x, particle.y - enemy.y);
-            if (distance < enemy.radius + particle.radius) {
-                setTimeout(() => {
-                    particles.splice(j, 1);
-                    enemy.radius -= 2 * particle.radius;
-                    if (enemy.radius < 5) enemy.radius = 5;//particle doesn't kill
-                });
-            }
-        });
-
-        //enemy hit player
+        //player collision
         const distance = Math.hypot(player.x - enemy.x, player.y - enemy.y);
         if (distance < player.radius + enemy.radius) {
-            setTimeout(() => { enemies.splice(i, 1); });
             //deal dmg equal to remaining radius. if no more radius, game over
             if (player.radius < enemy.radius) {
                 pauseSpawn = true;
@@ -187,17 +200,11 @@ function animate() {
                 for (let i = 0; i < enemy.radius; i++) {
                     projectiles.push(new MovingCircle(player.x, player.y, player.radius * 0.2, player.color, projectileSpeed, Math.random() * 2 * Math.PI));
                 }
+                enemy.radius = 0;
             }
         }
+        if (enemy.radius < 1) setTimeout(() => { enemies.splice(i, 1); });
     });
-
-    particles.forEach((particle, i) => {
-        context.save();
-        particle.update();
-        context.restore();
-        if (particle.alpha < 0)
-            particles.splice(i, 1);
-    })
 }
 
 function resetGame() {
