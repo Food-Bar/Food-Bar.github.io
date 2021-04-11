@@ -1,17 +1,18 @@
-//////////////////////////////////////////////////////////////////
+//////////////////////////- Settings -////////////////////////////
 const background = 'rgba(0,0,0,0.3)';
 
-const playerSize = 10;
+const playerSize = 30;
 const playerColor = 'white';
 
 const projectileSize = 5;
 const projectileColor = 'white';
 const projectileSpeed = 5;
+const projectileDamage = 10;
 
 const particleSize = 1;
 const particleMaxSpeed = 8;
-const particlePerSize = 1;
-const particleDecay = 0.01;
+const particlePerSize = 2;
+const particleAlphaDecay = 0.01;
 
 const difficultyInit = 1500;
 const difficultyScaling = 0.99;
@@ -25,7 +26,7 @@ canvas.height = window.innerHeight;
 
 const context = canvas.getContext('2d');
 
-class Player {
+class CircleThing {
     constructor(x, y, radius, color) {
         this.x = x;
         this.y = y;
@@ -38,100 +39,45 @@ class Player {
         context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
         context.fillStyle = this.color;
         context.fill();
-    }
+    };
+
+}
+
+class MovingCircle extends CircleThing {
+    constructor(x, y, radius, color, velocity, angle) {
+        super(x, y, radius, color);
+        this.originalRadius = radius;
+        this.velocity = {
+            x: velocity * Math.cos(angle),
+            y: velocity * Math.sin(angle)
+        };
+    };
+    update() {
+        this.draw();
+        this.x += this.velocity.x;
+        this.y += this.velocity.y;
+    };
 };
 
-class Projectile {
+class Particle extends MovingCircle {
     constructor(x, y, radius, color, velocity, angle) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.color = color;
-        this.velocity = {
-            x: velocity * Math.cos(angle),
-            y: velocity * Math.sin(angle)
-        };
-    }
-
-    draw() {
-        context.beginPath();
-        context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
-        context.fillStyle = this.color;
-        context.fill();
-    }
-
-    update() {
-        this.draw();
-        this.x += this.velocity.x;
-        this.y += this.velocity.y;
-    }
-}
-
-class Enemy {
-    constructor(x, y, radius, color, velocity, angle) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.originalRadius = radius;
-        this.color = color;
-        this.velocity = {
-            x: velocity * Math.cos(angle),
-            y: velocity * Math.sin(angle)
-        };
-    }
-
-    draw() {
-        context.beginPath();
-        context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
-        context.fillStyle = this.color;
-        context.fill();
-    }
-
-    update() {
-        this.draw();
-        this.x += this.velocity.x;
-        this.y += this.velocity.y;
-    }
-}
-
-class Particle {
-    constructor(x, y, radius, color, velocity, angle) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.color = color;
-        this.velocity = {
-            x: velocity * Math.cos(angle),
-            y: velocity * Math.sin(angle)
-        };
+        super(x, y, radius, color, velocity, angle);
         this.alpha = 1;
-    }
-
-    draw() {
-        context.save();
-        context.globalAlpha = this.alpha;
-        context.beginPath();
-        context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
-        context.fillStyle = this.color;
-        context.fill();
-        context.restore();
-    }
-
+    };
     update() {
-        this.draw();
-        this.x += this.velocity.x;
-        this.y += this.velocity.y;
-        this.alpha -= particleDecay;
-    }
-}
+        context.globalAlpha = this.alpha;
+        super.update();
+        this.alpha -= particleAlphaDecay;
+    };
+};
 
-let player = new Player(canvas.width / 2, canvas.height / 2, playerSize, playerColor);
-let projectiles;
+let player = new CircleThing(canvas.width / 2, canvas.height / 2, playerSize, playerColor);
+let projectiles = [];
 let enemies;
 let particles;
 let score;
 function init() {
-    player = new Player(canvas.width / 2, canvas.height / 2, playerSize, playerColor);
+    player = new CircleThing(canvas.width / 2, canvas.height / 2, playerSize, playerColor);
     projectiles = [];
     enemies = [];
     particles = [];
@@ -157,14 +103,14 @@ function spawnEnemies() {
         }
         const angle = Math.atan2(player.y - y, player.x - x);
 
-        enemies.push(new Enemy(x, y, radius, color, velocity, angle));
+        enemies.push(new MovingCircle(x, y, radius, color, velocity, angle));
         delay *= difficultyScaling;
     }, delay);
 }
 
 window.addEventListener('click', (event) => {
     const angle = Math.atan2(event.clientY - player.y, event.clientX - player.x);
-    projectiles.push(new Projectile(player.x, player.y, projectileSize, projectileColor, projectileSpeed, angle));
+    projectiles.push(new MovingCircle(player.x, player.y, projectileSize, projectileColor, projectileSpeed, angle));
 });
 
 let animateId;
@@ -186,13 +132,12 @@ function animate() {
     enemies.forEach((enemy, i) => {
         enemy.update();
         projectiles.forEach((projectile, j) => {
-
             //projectile hit enemy
             const distance = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);
             if (distance < enemy.radius + projectile.radius) {
                 setTimeout(() => { projectiles.splice(j, 1); }); //remove projectile
                 if (enemy.radius > 15) { //if large, shrink
-                    gsap.to(enemy, { radius: enemy.radius - 10, duration: 0.1 });
+                    gsap.to(enemy, { radius: enemy.radius - projectileDamage, duration: 0.25 });
                     score += 50;
                 } else { //if small, die
                     setTimeout(() => { enemies.splice(i, 1); });
@@ -210,15 +155,22 @@ function animate() {
         //enemy hit player
         const distance = Math.hypot(player.x - enemy.x, player.y - enemy.y);
         if (distance < player.radius + enemy.radius) {
-            //game over
-            document.getElementById('final-score').innerHTML = score;
-            centerMenu.style.display = '';
-            cancelAnimationFrame(animateId);
+            //deal dmg equal to remaining radius
+            setTimeout(() => { enemies.splice(i, 1); });
+            player.radius -= enemy.radius;
+            if (player.radius < 0) {
+                //if no more radius, game over
+                document.getElementById('final-score').innerHTML = score;
+                centerMenu.style.display = '';
+                cancelAnimationFrame(animateId);
+            }
         }
     });
 
     particles.forEach((particle, i) => {
+        context.save();
         particle.update();
+        context.restore();
         if (particle.alpha < 0)
             particles.splice(i, 1);
     })
