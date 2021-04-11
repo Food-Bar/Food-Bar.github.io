@@ -21,10 +21,10 @@ const centerMenu = document.getElementById('center-menu');
 const canvas = document.getElementById('play area');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-// window.addEventListener('resize', () => {
-//     canvas.width = window.innerWidth;
-//     canvas.height = window.innerHeight;
-// });
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
 
 const context = canvas.getContext('2d');
 
@@ -108,7 +108,6 @@ function spawnEnemies() {
 
     enemies.push(new MovingCircle(x, y, radius, color, velocity, angle));
     delay *= difficultyScaling;
-    console.log(delay);
 
     setTimeout(spawnEnemies, delay);
 }
@@ -143,19 +142,19 @@ function animate() {
                 setTimeout(() => { projectiles.splice(j, 1); }); //remove projectile
                 if (enemy.radius > 5 + 2 * projectile.radius) { //if large, shrink
                     gsap.to(enemy, { radius: enemy.radius - 2 * projectile.radius, duration: 0.25 });
-                    score += 50;
                     for (let i = 0; i < projectile.radius * particlePerSize; i++) {//explode
                         particles.push(new Particle(projectile.x, projectile.y, particleSize, enemy.color,
                             Math.random() * particleMaxSpeed, Math.random() * 2 * Math.PI));
                     }
+                    score += 50;
                 } else { //if small, die
                     setTimeout(() => { enemies.splice(i, 1); });
-                    score += 100;
-                    player.radius += 1;
                     for (let i = 0; i < enemy.originalRadius * particlePerSize; i++) {//explode
                         particles.push(new Particle(projectile.x, projectile.y, particleSize, enemy.color,
                             Math.random() * particleMaxSpeed, Math.random() * 2 * Math.PI));
                     }
+                    player.radius += 1;
+                    score += 100;
                 }
                 scoreDisplay.innerHTML = score;
             }
@@ -165,24 +164,29 @@ function animate() {
             //particle hit enemy
             const distance = Math.hypot(particle.x - enemy.x, particle.y - enemy.y);
             if (distance < enemy.radius + particle.radius) {
-                setTimeout(() => { particles.splice(j, 1); }); //remove particle
-                if (enemy.radius > 10) //particle doesn't kill
-                    setTimeout(() => { enemy.radius -= 2 * particle.radius; });
+                setTimeout(() => {
+                    particles.splice(j, 1);
+                    enemy.radius -= 2 * particle.radius;
+                    if (enemy.radius < 5) enemy.radius = 5;//particle doesn't kill
+                });
             }
         });
 
         //enemy hit player
         const distance = Math.hypot(player.x - enemy.x, player.y - enemy.y);
         if (distance < player.radius + enemy.radius) {
-            //deal dmg equal to remaining radius
             setTimeout(() => { enemies.splice(i, 1); });
-            player.radius -= enemy.radius;
-            if (player.radius < 0) {
-                //if no more radius, game over
+            //deal dmg equal to remaining radius. if no more radius, game over
+            if (player.radius < enemy.radius) {
                 pauseSpawn = true;
                 document.getElementById('final-score').innerHTML = score;
                 centerMenu.style.display = '';
                 cancelAnimationFrame(animateId);
+            } else {
+                player.radius -= enemy.radius;
+                for (let i = 0; i < enemy.radius; i++) {
+                    projectiles.push(new MovingCircle(player.x, player.y, player.radius * 0.2, player.color, projectileSpeed, Math.random() * 2 * Math.PI));
+                }
             }
         }
     });
