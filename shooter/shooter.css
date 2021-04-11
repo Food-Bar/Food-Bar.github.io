@@ -1,0 +1,49 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    touch-action: manipulation;
+    background-color: black;
+}
+
+#scoreboard {
+    position: fixed;
+    color: white;
+    padding: 10px;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#center-menu {
+    width: 50%;
+    height: 20%;
+    position: fixed;
+    top: 40%;
+    left: 25%;
+}
+
+#start-menu {
+    background-color: white;
+}
+
+#start-menu * {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    background-color: white;
+}
+
+#start-menu button {
+    background-color: rgba(0, 110, 255, 0.678);
+    color: white;
+    font-size: 30px;
+    height: 30%;
+    border-radius: 9999px;
+    width: 90%;
+    height: 30%;
+    margin-bottom: 20px;
+}
+
+#start-menu button:hover {
+    background-color: rgba(0, 110, 255, 0.479);
+}
