@@ -138,8 +138,8 @@ const bg = {
     height: canvas.height
 }
 function drawBackground() {
-    if (bg.upper1 -= gameSpeed < -bg.width) bg.upper1 = bg.width;
-    if (bg.upper2 -= gameSpeed < -bg.width) bg.upper2 = bg.width;
+    if ((bg.upper1 -= gameSpeed) < -bg.width) bg.upper1 = bg.width;
+    if ((bg.upper2 -= gameSpeed) < -bg.width) bg.upper2 = bg.width;
 
     ctx.drawImage(background, bg.upper1, 0, bg.width, bg.height);
     ctx.drawImage(background, bg.upper2, 0, bg.width, bg.height);
