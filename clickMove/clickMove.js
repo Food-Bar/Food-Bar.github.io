@@ -55,6 +55,12 @@ class Player {
         if (mouse.y != this.y) {
             this.y -= dy / 20;
         }
+
+        if (gameFrame % 20 == 0) {
+            this.frameX = this.frame % 4;
+            this.frameY = Math.trunc(this.frame / 4);
+            if (++this.frame >= 12) this.frame = 0;
+        }
     }
 
     draw() {
@@ -65,7 +71,7 @@ class Player {
             ctx.drawImage(playerLeft, this.frameX * this.width, this.frameY * this.height, this.width,
                 this.height, - 70, - 50, this.width * 0.3, this.height * 0.3);
         } else {
-            ctx.drawImage(playerRight, this.frameX * this.width, this.frameY * this.height, this.width,
+            ctx.drawImage(playerRight, this.frameX * this.width, (2 - this.frameY) * this.height, this.width,
                 this.height, - 70, - 50, this.width * 0.3, this.height * 0.3);
         }
         ctx.restore();
