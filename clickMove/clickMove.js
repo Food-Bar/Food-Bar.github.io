@@ -128,21 +128,28 @@ function blowBubble() {
     }
 }
 
-const background = new Image();
-background.src = './img/background1.png';
+const upper = new Image();
+upper.src = './img/background1.png';
+const lower = new Image();
+lower.src = './img/background2.png';
 const bg = {
     upper1: 0,
     upper2: canvas.width,
-    lower: 0,
+    lower1: 0,
+    lower2: -canvas.width,
     width: canvas.width,
     height: canvas.height
 }
 function drawBackground() {
     if ((bg.upper1 -= gameSpeed) < -bg.width) bg.upper1 = bg.width;
     if ((bg.upper2 -= gameSpeed) < -bg.width) bg.upper2 = bg.width;
+    if ((bg.lower1 += gameSpeed) > bg.width) bg.lower1 = -bg.width;
+    if ((bg.lower2 += gameSpeed) > bg.width) bg.lower2 = -bg.width;
 
-    ctx.drawImage(background, bg.upper1, 0, bg.width, bg.height);
-    ctx.drawImage(background, bg.upper2, 0, bg.width, bg.height);
+    ctx.drawImage(upper, bg.upper1, 0, bg.width, bg.height);
+    ctx.drawImage(upper, bg.upper2, 0, bg.width, bg.height);
+    ctx.drawImage(lower, bg.lower1, 0, bg.width, bg.height);
+    ctx.drawImage(lower, bg.lower2, 0, bg.width, bg.height);
 }
 
 
