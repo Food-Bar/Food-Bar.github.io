@@ -23,6 +23,10 @@ const centerMenu = document.getElementById('center-menu');
 const canvas = document.getElementById('play area');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
 
 const context = canvas.getContext('2d');
 
