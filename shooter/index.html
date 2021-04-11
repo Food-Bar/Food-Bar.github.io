@@ -1,18 +1,73 @@
-<html>
+<html lang='en'>
 
 <head>
+    <meta charset='utf-8'>
     <title>Shootie</title>
-    <meta content="user-scalable=no" name="viewport"/>
+    <meta content='width=device-width, user-scalable=0' name="viewport" />
 </head>
 <style>
     * {
         margin: 0px;
         padding: 0px;
         touch-action: manipulation;
+        background-color: black;
+    }
+
+    #scoreboard {
+        position: fixed;
+        color: white;
+        padding: 10px;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    #center-menu {
+        width: 50%;
+        height: 20%;
+        position: fixed;
+        top: 40%;
+        left: 25%;
+    }
+
+    #start-menu {
+        background-color: white;
+    }
+
+    #start-menu * {
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        background-color: white;
+    }
+
+    #start-menu button {
+        background-color: rgba(0, 110, 255, 0.678);
+        color: white;
+        font-size: 30px;
+        height: 30%;
+        border-radius: 9999px;
+        width: 90%;
+        height: 30%;
+        margin-bottom: 20px;
+    }
+
+    #start-menu button:hover {
+        background-color: rgba(0, 110, 255, 0.479);
     }
 </style>
 
-<canvas></canvas>
+<div id='scoreboard'><span>Score: </span><span id='score'>0</span></div>
+
+<div id='center-menu'>
+    <div id='start-menu'>
+        <div style='font-size: 60px; padding-top: 20px;' id='final-score'>0</div>
+        <div style='font-size: 18px; padding-bottom: 10px'>Points</div>
+        <div> <button type='button' onclick='resetGame()'>Start</button> </div>
+    </div>
+</div>
+
+<canvas id='play area'></canvas>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"
     integrity="sha512-cdV6j5t5o24hkSciVrb8Ki6FveC2SgwGfLE31+ZQRHAeSRxYhAQskLkq3dLm8ZcWe1N3vBOEYmmbhzf7NTtFFQ=="
