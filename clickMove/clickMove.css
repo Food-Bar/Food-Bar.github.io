@@ -1,0 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#play-area{
+    background: linear-gradient(to bottom, lightblue, darkblue, black);
+}
