@@ -7,6 +7,7 @@
 
 #scoreboard {
     position: fixed;
+    bottom: 0;
     color: white;
     padding: 10px;
     -ms-user-select: none;
@@ -16,9 +17,8 @@
 
 #center-menu {
     width: 50%;
-    height: 20%;
     position: fixed;
-    top: 40%;
+    top: 42%;
     left: 25%;
 }
 
@@ -40,7 +40,7 @@
     height: 30%;
     border-radius: 9999px;
     width: 90%;
-    height: 30%;
+    height: 75px;
     margin-bottom: 20px;
 }
 
