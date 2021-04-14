@@ -6,8 +6,8 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth - 50;
-    canvas.height = window.innerHeight - 50;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 });
 
 const mouse = {
@@ -170,6 +170,7 @@ function animate() {
     ctx.fillStyle = 'black';
     ctx.fillText('Score: ' + score, 10, 50);
     gameFrame++;
+    //branch
     requestAnimationFrame(animate);
 }
 

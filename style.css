@@ -49,11 +49,11 @@ body {
 .navbar-button {
     top: .75rem;
     right: 5rem;
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 30px;
     height: 21px;
+    display: flex;
 }
 .navbar-button .bar{
     width: 100%;
