@@ -11,13 +11,17 @@
     z-index: 20;
 }
 
-body a{
+#welcome-bar{
+    background: linear-gradient(to bottom, #111, #aaa, #333);
+}
+
+#nav-bar a {
     text-decoration: none;
     color: inherit;
 }
 
-#welcome-bar{
-    background: linear-gradient(to bottom, #111, #aaa, #333);
+#nav-bar a:hover {
+    background-color: #555;
 }
 
 #nav-bar {
@@ -37,10 +41,6 @@ body a{
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 25px;
-}
-
-#nav-icon a{
-    margin-left: 10px;
     font-size: 32px;
     font-weight: 500;
 }
@@ -55,15 +55,13 @@ body a{
     list-style: none;
     display: flex;
     height: 100%;
+
 }
 
-#nav-links li {
+#nav-links a {
     display: flex;
     align-items: center;
     padding-left: 30px;
     padding-right: 30px;
-}
-
-#nav-icon:hover, #nav-links li:hover {
-    background-color: #555;
+    height: 100%;
 }
