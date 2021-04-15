@@ -20,10 +20,16 @@ addEventListener('scroll', () => {
 
 // for the responsive link menu
 burger.addEventListener('click', () => {
+    // menu animation
     navLink.classList.toggle('nav-active');
+
+    // link animation
     for (let i = 0; i < links.length; i++) {
         if (links[i].style.animation) links[i].style.animation = '';
         else links[i].style.animation = `link-fade 0.5s ease forwards ${0.2 * i + 0.5}s`;
     }
+
+    // burger animation
+    burger.classList.toggle('toggle');
 });
 content.addEventListener('click', () => { navLink.classList.remove('nav-active'); });
