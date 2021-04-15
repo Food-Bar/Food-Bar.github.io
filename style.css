@@ -9,32 +9,53 @@ body a{
     color: inherit;
 }
 
+#welcome-bubble{
+    background-color: #666;
+}
+
 nav {
     height: 5vh;
-    background-color: #555;
+    background-color: #333;
+    color: white;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Raleway', sans-serif;
+}
+
+.nav-icon {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 25px;
+}
+
+.nav-icon a{
+    margin-left: 10px;
+    font-size: 32px;
+    font-weight: 500;
 }
 
 .nav-links {
-    align-self: right;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links ul {
     list-style: none;
     display: flex;
-    width: 50%;
     height: 100%;
-    justify-content: space-around;
+}
+
+.nav-links li {
+    display: flex;
     align-items: center;
-    margin-left: auto;
-    background-color: aquamarine;
+    padding: 30px;
 }
 
-.nav-links a{
-    padding: auto;
-}
-
-.nav-links li:hover {
-    background-color: #333;
-}
-
-#welcome-bubble{
-    background-color: #666;
+.nav-icon:hover, .nav-links li:hover {
+    background-color: #555;
 }
