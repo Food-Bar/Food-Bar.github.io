@@ -1,67 +1,40 @@
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-}
-
-.navbar {
-    position: absolute;
-    width: 100%;
-
-    font-family: 'New Tegomin', serif;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    background-color: #333;
-    color: white;
-}
-
-.navbar-icon {
-    font-size: 1.5rem;
-    margin-left:1rem;
-}
-
-.navbar-links ul {
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar-links li {
-    list-style: none;
-}
-
-.navbar-links li a {
+body a{
     text-decoration: none;
     color: inherit;
-    display: block;
-    padding: 1rem;
 }
 
-.navbar-links li:hover {
+nav {
+    height: 5vh;
     background-color: #555;
-}
-
-.navbar-button {
-    top: .75rem;
-    right: 5rem;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 21px;
     display: flex;
 }
-.navbar-button .bar{
-    width: 100%;
-    height: 3px;
-    background-color: white;
-    border-radius: 10px;
+
+.nav-links {
+    align-self: right;
+    list-style: none;
+    display: flex;
+    width: 50%;
+    height: 100%;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: auto;
+    background-color: aquamarine;
 }
 
-@media (max-width: 600px){
+.nav-links a{
+    padding: auto;
+}
 
+.nav-links li:hover {
+    background-color: #333;
+}
+
+#welcome-bubble{
+    background-color: #666;
 }

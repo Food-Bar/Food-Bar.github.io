@@ -22,7 +22,7 @@ addEventListener('mousemove', event => {
 });
 
 // adjustable parameters
-const fontURL = "url(./Arizonia-Regular.ttf)";
+const fontURL = "url(../fonts/Arizonia-Regular.ttf)";
 
 const xBound = 250;
 const yBound = 90;

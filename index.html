@@ -5,11 +5,7 @@
   <meta charset='utf-8'>
   <title>Thing!</title>
 
-  <!--jQuery-->
-  <script src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js'></script>
-
   <link href='style.css' rel='stylesheet'>
-
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet">
 </head>
@@ -17,23 +13,27 @@
 <body>
   <nav class="navbar">
     <div class="navbar-icon">
-      Thing!
+      <a href="/"> Thing!</a>
     </div>
-    <div class="navbar-links">
-      <ul>
-        <li><a href="./bubbles">Thing1</a></li>
-        <li><a href="#">Thing2</a></li>
-        <li><a href="#">Thing3</a></li>
-      </ul>
-    </div>
-    <div class="navbar-button">
+
+    <div class="burger">
       <div class="bar"></div>
       <div class="bar"></div>
       <div class="bar"></div>
     </div>
+
+    <ul class="nav-links">
+      <li><a href="./bubbles/">Thing1</a></li>
+      <li><a href="#">Thing2</a></li>
+      <li><a href="#">Thing3</a></li>
+    </ul>
   </nav>
 
+  <div id="content">
+    <canvas id="welcome-bubble"></canvas>
+  </div>
 
+  <script src="./welcome-bubble.js"></script>
 </body>
 
 </html>
