@@ -24,7 +24,7 @@ p {
     text-align: center;
 }
 
-@media (min-width: 800px){
+@media (min-width: 1200px){
     section {
         margin-left: 20%;
         width: 60%;

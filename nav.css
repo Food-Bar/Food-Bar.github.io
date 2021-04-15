@@ -77,7 +77,7 @@
     transition: all 0.3s ease;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1200px) {
     #burger {
         display: flex;
         cursor: pointer;
