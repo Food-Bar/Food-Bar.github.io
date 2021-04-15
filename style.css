@@ -4,16 +4,23 @@
     box-sizing: border-box;
 }
 
+.fixed {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 20;
+}
+
 body a{
     text-decoration: none;
     color: inherit;
 }
 
 #welcome-bubble{
-    background-color: #666;
+    background: linear-gradient(to bottom, black, #aaa, #333);
 }
 
-nav {
+#nav-bar {
     height: 5vh;
     background-color: #333;
     color: white;
@@ -23,7 +30,7 @@ nav {
     font-family: 'Raleway', sans-serif;
 }
 
-.nav-icon {
+#nav-icon {
     height: 100%;
     display: flex;
     align-items: center;
@@ -32,30 +39,31 @@ nav {
     border-radius: 25px;
 }
 
-.nav-icon a{
+#nav-icon a{
     margin-left: 10px;
     font-size: 32px;
     font-weight: 500;
 }
 
-.nav-links {
+#nav-links {
     height: 100%;
     display: flex;
     align-items: center;
 }
 
-.nav-links ul {
+#nav-links ul {
     list-style: none;
     display: flex;
     height: 100%;
 }
 
-.nav-links li {
+#nav-links li {
     display: flex;
     align-items: center;
-    padding: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
-.nav-icon:hover, .nav-links li:hover {
+#nav-icon:hover, #nav-links li:hover {
     background-color: #555;
 }
