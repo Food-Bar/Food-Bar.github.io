@@ -16,8 +16,8 @@ body a{
     color: inherit;
 }
 
-#welcome-bubble{
-    background: linear-gradient(to bottom, black, #aaa, #333);
+#welcome-bar{
+    background: linear-gradient(to bottom, #111, #aaa, #333);
 }
 
 #nav-bar {
