@@ -125,12 +125,12 @@
 }
 
 .toggle .bar1 {
-    transform: rotate(135deg) translate(7px, -7px);
+    transform: rotate(-45deg) translate(-7px, 7px);
 }
 .toggle .bar2 {
     opacity: 0;
     transform: rotate(180deg);
 }
 .toggle .bar3 {
-    transform: rotate(-135deg) translate(7px, 7px);
+    transform: rotate(45deg) translate(-7px, -7px);
 }
