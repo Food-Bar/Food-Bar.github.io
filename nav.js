@@ -1,7 +1,8 @@
 const nav = document.getElementById('nav-bar');
 const welcome = document.getElementById('welcome-bubble');
 const burger = document.getElementById('burger');
-const navLink = document.getElementById('nav-links');
+const navUl = document.getElementById('nav-ul');
+console.log(navUl)
 const content = document.getElementById('content');
 const links = document.getElementsByClassName('nav-link');
 
@@ -19,17 +20,31 @@ addEventListener('scroll', () => {
 });
 
 // for the responsive link menu
+let menuOut = false;
 burger.addEventListener('click', () => {
-    // menu animation
-    navLink.classList.toggle('nav-active');
-
-    // link animation
-    for (let i = 0; i < links.length; i++) {
-        if (links[i].style.animation) links[i].style.animation = '';
-        else links[i].style.animation = `link-fade 0.5s ease forwards ${0.2 * i + 0.5}s`;
+    if (menuOut) {
+        navUl.style.animation = '';
+        navUl.offsetHeight;
+        navUl.style.animation = `fade-in 0.5s ease reverse both ${0.2 * links.length}s`;
+        for (let i = 0; i < links.length; i++) {
+            links[i].style.animation = '';
+            links[i].offsetHeight;
+            links[i].style.animation = `fade-in 0.5s ease reverse both ${0.2 * i}s`;
+        }
+        menuOut = false;
+    } else {
+        navUl.style.animation = '';
+        navUl.offsetHeight;
+        navUl.style.animation = 'fade-in 0.5s ease forwards';
+        for (let i = 0; i < links.length; i++) {
+            links[i].style.animation = '';
+            links[i].offsetHeight;
+            links[i].style.animation = `fade-in 0.5s ease forwards ${0.2 * i + 0.5}s`;
+        }
+        menuOut = true;
     }
 
     // burger animation
     burger.classList.toggle('toggle');
 });
-content.addEventListener('click', () => { navLink.classList.remove('nav-active'); });
+content.addEventListener('click', () => { navUl.classList.remove('nav-active'); });

@@ -10,7 +10,6 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    overflow-x: hidden;
 }
 
 section {
@@ -35,9 +34,16 @@ p {
     text-align: center;
 }
 
-@media (min-width: 1200px){
+@media (min-width: 1000px) and (max-width: 1999px){
     section {
         margin-left: 20%;
         width: 60%;
+    }
+}
+
+@media (min-width: 2000px){
+    section {
+        margin-left: 25%;
+        width: 50%;
     }
 }
