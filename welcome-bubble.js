@@ -2,14 +2,14 @@
 const canvas = document.getElementById('welcome-bubble');
 const ctx = canvas.getContext('2d');
 
-canvas.width = innerWidth;
-canvas.height = innerWidth * 0.2;
+canvas.width = document.body.clientWidth;
+canvas.height = canvas.width * 0.2;
 
 // mouse inputs
 const mouse = {
     x: null,
     y: null,
-    radiusSqr: 400 * 400
+    radiusSqr: canvas.width * canvas.height
 }
 
 canvas.addEventListener('mousemove', event => {
@@ -17,18 +17,16 @@ canvas.addEventListener('mousemove', event => {
     mouse.y = event.offsetY;
 });
 
-canvas.addEventListener('mouseleave', ()=>{
+canvas.addEventListener('mouseleave', () => {
     mouse.x = null;
     mouse.y = null;
 });
 
 addEventListener('resize', () => {
-    canvas.width = innerWidth;
-    canvas.height = innerWidth * 0.2;
-    if (innerWidth < 1000) bubbleSize = 1;
-    else if (innerWidth < 2000) bubbleSize = 2;
-    else bubbleSize = 3;
-
+    canvas.width = document.body.clientWidth;
+    canvas.height = canvas.width * 0.2;
+    bubbleSize = Math.ceil(canvas.width / 600);
+    mouse.radiusSqr = canvas.width * canvas.height;
     ratio = Math.min(canvas.width / xBound, canvas.height / yBound);
     xOffset = (canvas.width - ratio * xBound) >> 1;
     yOffset = (canvas.height - ratio * yBound) >> 1;
@@ -38,13 +36,13 @@ addEventListener('resize', () => {
 // adjustable parameters
 const text = "Welcome!";
 const fontURL = "url(./fonts/Arizonia-Regular.ttf)";
-const xBound = 140;
-const yBound = 35;
 
-let bubbleSize;
-if (innerWidth < 1000) bubbleSize = 2;
-else if (innerWidth < 2000) bubbleSize = 3;
-else bubbleSize = 4;
+const textX = 5;
+const textY = 25;
+const xBound = 110;
+const yBound = 30;
+
+let bubbleSize = Math.ceil(canvas.width / 600);
 
 const spacing = 1; // eg if set to 3, draw every 3rd pixel
 const connectDistSqr = 0; //will not connect if 0
@@ -62,8 +60,8 @@ let yOffset = (canvas.height - ratio * yBound) >> 1;
 let imgData;
 function init() {
     ctx.fillStyle = 'white';
-    ctx.font = '40px stupidFont';
-    ctx.fillText(text, 3, 30);
+    ctx.font = '30px stupidFont';
+    ctx.fillText(text, textX, textY);
 
     imgData = ctx.getImageData(0, 0, xBound, yBound);
 
@@ -80,14 +78,13 @@ class Particle {
         this.y = y;
         this.baseX = this.x;
         this.baseY = this.y;
-        this.size = bubbleSize;
         this.density = Math.random() * 150 + 50;
     }
 
     draw() {
         ctx.fillStyle = 'white';
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, bubbleSize, 0, Math.PI * 2);
         ctx.closePath();
         ctx.fill();
     }
@@ -103,11 +100,9 @@ class Particle {
         dy = mouse.y - this.y;
         let distSqr = dy * dy + dx * dx;
         let force = (mouse.radiusSqr - distSqr) / mouse.radiusSqr;
-
-
         if (mouse.x && distSqr < mouse.radiusSqr) {
-            this.x -= dx * force / distSqr * this.density;
-            this.y -= dy * force / distSqr * this.density;
+            this.x -= dx * force / distSqr * this.density * 2;
+            this.y -= dy * force / distSqr * this.density * 2;
         }
     }
 }

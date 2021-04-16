@@ -85,9 +85,6 @@
     #burger:hover {
         background-color: #555;
     }
-    body{
-        overflow-x: hidden;
-    }
     #nav-links {
         position: relative;
         right: 0px;
