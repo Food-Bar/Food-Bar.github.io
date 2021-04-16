@@ -99,12 +99,13 @@
     #nav-links {
         position: relative;
         right: 0px;
-        height: 95vh;
+        height: 96vh;
         top: 50vh;
         transition: transform 0.5s ease-in;
-        overflow-x: hidden;
+        overflow: hidden;
     }
     #nav-links ul {
+        padding-top: 1vh;
         flex-direction: column;
         background-color: #333;
         opacity: 0

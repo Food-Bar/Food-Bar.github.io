@@ -17,10 +17,14 @@ canvas.addEventListener('mousemove', event => {
     mouse.y = event.offsetY;
 });
 
-canvas.addEventListener('mouseleave', () => {
-    mouse.x = null;
-    mouse.y = null;
+canvas.addEventListener('touchmove', event => {
+    event.preventDefault();
+    mouse.x = event.touches[0].clientX;
+    mouse.y = event.touches[0].clientY;
 });
+
+canvas.addEventListener('mouseleave', () => { mouse.x = null; });
+canvas.addEventListener('touchend', event => { mouse.x = null; })
 
 addEventListener('resize', () => {
     canvas.width = document.body.clientWidth;
