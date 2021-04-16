@@ -2,7 +2,6 @@ const nav = document.getElementById('nav-bar');
 const welcome = document.getElementById('welcome-bubble');
 const burger = document.getElementById('burger');
 const navUl = document.getElementById('nav-ul');
-console.log(navUl)
 const content = document.getElementById('content');
 const links = document.getElementsByClassName('nav-link');
 

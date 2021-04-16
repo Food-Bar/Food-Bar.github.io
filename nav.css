@@ -1,13 +1,13 @@
 
 .fixed {
-    position: fixed;
-    width: 100%;
+    position: fixed!important;
     top: 0;
     z-index: 20;
 }
 
 #welcome-bar{
     background: linear-gradient(to bottom, #111, #aaa, #555, #333);
+    position: relative;
 }
 
 #nav-bar a {
@@ -26,6 +26,9 @@
     justify-content: space-between;
     align-items: center;
     font-family: 'Poppins', sans-serif;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 #nav-icon {
