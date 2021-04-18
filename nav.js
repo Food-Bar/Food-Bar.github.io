@@ -7,14 +7,12 @@ const links = document.getElementsByClassName('nav-link');
 
 // for sticky nav bar
 addEventListener('scroll', () => {
-    if (welcome.getBoundingClientRect().bottom < -5) {
+    if (welcome.getBoundingClientRect().bottom < 0.05 * innerHeight) {
         nav.classList.add('fixed');
         nav.style.backgroundColor = '#333';
-        content.style.marginTop = '5vh';
-    } else {
+    } else{
         nav.classList.remove('fixed');
         nav.style.backgroundColor = 'transparent';
-        content.style.marginTop = 0;
     }
 });
 
