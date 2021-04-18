@@ -5,7 +5,7 @@
 }
 
 body {
-    background-image: url('~/img/inky.jpg');
+    background-image: url('/img/inky.jpg');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
